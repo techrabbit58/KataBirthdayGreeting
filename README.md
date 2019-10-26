@@ -21,7 +21,7 @@ And you want to send them a happy birthday email on their birth date:
 
      Happy birthday, dear <first_name>!
 
-How would this software look like? Try to implement it so you can easily change :
+How would this software look like? Try to implement it so you can easily change:
 
 - the way you retrieve the friends data (for instance, try switching to a SQLite Db)
 - the way you send the note: (for instance, imagine you want to send SMS instead of emails)
