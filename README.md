@@ -30,7 +30,7 @@ What kind of tests would you write? Would you use Mocks?
 
 ## Additional Features
 
-- Friends born on February, 29th should have their Birthday greeted on February, 28th
+- Friends born on February, 29th should have their Birthday greeted on February, 28th.
 - Send a Birthday Reminder note when it is someone else birthday:
 
           Subject: Birthday Reminder
