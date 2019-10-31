@@ -1,5 +1,7 @@
 # Design Strategy
+
 ## Introduction
+
 This kata is about keeping an application architecture open
 for extension, but close for change. That means: the core
 functionality (selecting persons of the day for greeting, and
@@ -27,6 +29,7 @@ about other persons birthday. It may require additional data
 **REMARK:** The Feb, 29th feature will be covered.
 
 ## Core Functionality
+
 ```plantuml
 actor "Caller" as CALLER
 
@@ -62,6 +65,7 @@ rectangle "Birthday Greeting" as GREETER {
 
 ## Application Dependencies
 ```plantuml
+
 actor "Caller" as CALLER
 
 package "Birthday Greeting" {
@@ -93,6 +97,7 @@ NOTIFICATOR_IFS <|-- NOTIFICATOR
 ```
 
 ## Implementation
+
 * The Birthday Greeting core shall be implemented with a
 single non-default constructor that allows dependency
 injection for the friends list, and notification service.
@@ -106,5 +111,42 @@ tested and provided separately.
 * Only the interfaces shall be part of the Birthday Greeting
 implementation package. Actual peripheral components must
 follow the Greeting application's interface definitions.
+
+## Resources
+
+- The notifications shall use some message templates
+from the kata description. This shall best be integrated as
+resources for the Birthday Greeting core. The templates
+shall not be coded into the application.
+- The core shall be able to access these templates at
+runtime.
+- A message preparation utility shall be part of the core
+package.
+- The notification service adapters shall only be used for
+message delivery and shall not have any other responsibility.
+
+## Testing
+
+- E-mail services are convenience services, and do by purpose
+no harm to the content they transport from sender to receiver.
+So it is not necessary to test the e-mail transport chain end
+to end for testing the birthday greeter core.
+The same will most likely be true for any other standard
+message transport.
+- Of course, an integration test will eventually be necessary,
+with any notification service adapter, prior to production.
+But this can be seen as part of a latter product increment.
+The Birthday Greeting core will not need yet such implementation
+nor testing.
+- The same situation can be seen on the input side.
+We can consider the OS and file system as being functional,
+and do not need to cover file or DB reading in our current
+product increment.
+- So the tests shall mock the data source and notification service
+with test objects that can provide exactly the needed data for
+input, and allow verifications of core processing outcomes,
+but do no real I/O with the execution environment.
+- Mock classes shall be part of the test environment,
+not of the product.
 
 [(TOP)](#design-strategy)
