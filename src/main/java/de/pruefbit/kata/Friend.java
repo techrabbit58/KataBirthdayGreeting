@@ -2,7 +2,7 @@ package de.pruefbit.kata;
 
 import java.util.Map;
 
-public class Friend {
+class Friend {
 
     private String lastName;
     private String firstName;

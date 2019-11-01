@@ -8,7 +8,7 @@ class Greeting {
     private String name;
 
     Greeting() {
-        template = "Subject: Happy birthday!\n\nHappy birthday, dear %s!";
+        template = "%s";
     }
 
     Greeting to(@NotNull String name) {

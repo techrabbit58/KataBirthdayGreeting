@@ -22,7 +22,7 @@ during runtime, and before the core functionality gets run.
 
 **REMARK:** The current release does not support the additional
 features concerning the reminder messages, since that requires
-a lot of assumptions about how to fugure out who to remind
+a lot of assumptions about how to figure out who to remind
 about other persons birthday. It may require additional data
 (e.g. a list of subscribers for reminders).
 
@@ -120,8 +120,8 @@ resources for the Birthday Greeting core. The templates
 shall not be coded into the application.
 - The core shall be able to access these templates at
 runtime.
-- A message preparation utility shall be part of the core
-package.
+- (A) message preparation utility class(es) shall be part of
+the core package.
 - The notification service adapters shall only be used for
 message delivery and shall not have any other responsibility.
 
@@ -130,13 +130,13 @@ message delivery and shall not have any other responsibility.
 - E-mail services are convenience services, and do by purpose
 no harm to the content they transport from sender to receiver.
 So it is not necessary to test the e-mail transport chain end
-to end for testing the birthday greeter core.
+to end for effectively testing the birthday greeter core.
 The same will most likely be true for any other standard
 message transport.
 - Of course, an integration test will eventually be necessary,
 with any notification service adapter, prior to production.
 But this can be seen as part of a latter product increment.
-The Birthday Greeting core will not need yet such implementation
+The Birthday Greeting core will not need yet, such implementation
 nor testing.
 - The same situation can be seen on the input side.
 We can consider the OS and file system as being functional,
@@ -144,7 +144,7 @@ and do not need to cover file or DB reading in our current
 product increment.
 - So the tests shall mock the data source and notification service
 with test objects that can provide exactly the needed data for
-input, and allow verifications of core processing outcomes,
+input, and allow verification of core processing outcomes,
 but do no real I/O with the execution environment.
 - Mock classes shall be part of the test environment,
 not of the product.

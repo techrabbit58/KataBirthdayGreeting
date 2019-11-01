@@ -16,16 +16,16 @@ class BirthdayGreeting implements Runnable {
         this.today = LocalDate.now();
     }
 
-    void overrideToday(@NotNull LocalDate date) {
+    void overrideTodayWithDate(@NotNull LocalDate date) {
         this.today = date;
     }
 
     @Override
     public void run() {
-        List<Friend> friends = friendsDirectory.selectByDate(today);
-        friends.forEach(f -> {
+        List<Friend> friendsToGreet = friendsDirectory.selectByDate(today);
+        friendsToGreet.forEach(f -> {
             String message = new Greeting().to(f.getFirstName()).build();
-            notificationService.send(f.getEmail(), message);
+            notificationService.sendGreeting(f.getEmail(), message);
         });
     }
 }
