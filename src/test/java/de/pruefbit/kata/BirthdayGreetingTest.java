@@ -13,6 +13,7 @@ import java.time.Month;
 import java.time.MonthDay;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -52,7 +53,8 @@ class BirthdayGreetingTest {
         greeter.overrideTodayWithDate(date);
         greeter.run();
         assertEquals(1, notifications.size());
-        notifications.forEach((address, firstName) -> assertTrue(directoryHasMatchForAddressAndFirstName(address, firstName)));
+        notifications.forEach((address, firstName) -> assertTrue(
+                directoryHasMatchForAddressAndFirstName(address, firstName)));
     }
 
     @Test
@@ -63,7 +65,8 @@ class BirthdayGreetingTest {
         greeter.overrideTodayWithDate(date);
         greeter.run();
         assertTrue(notifications.size() > 1);
-        notifications.forEach((address, firstName) -> assertTrue(directoryHasMatchForAddressAndFirstName(address, firstName)));
+        notifications.forEach((address, firstName) -> assertTrue(
+                directoryHasMatchForAddressAndFirstName(address, firstName)));
     }
 
     @Test
@@ -74,6 +77,29 @@ class BirthdayGreetingTest {
         greeter.overrideTodayWithDate(date);
         greeter.run();
         assertEquals(0, notifications.size());
+    }
+
+    @Test
+    void BirthdayGreeting_for_Feb_29_works_with_leap_years() {
+        BirthdayGreeting greeter = new BirthdayGreeting(friends, notificationService);
+        LocalDate date = LocalDate.of(2004, 2, 29);
+        assertTrue(directoryHasMatchForDate(date));
+        assertTrue(date.isLeapYear());
+        greeter.overrideTodayWithDate(date);
+        greeter.run();
+        assertEquals(1, notifications.size());
+        notifications.forEach((address, firstName) -> assertTrue(
+                directoryHasMatchForAddressAndFirstName(address, firstName)));
+    }
+
+    @Test
+    void BirthdayGreeting_for_Feb_29_works_outside_leap_years() {
+        BirthdayGreeting greeter = new BirthdayGreeting(friends, notificationService);
+        LocalDate date = LocalDate.of(2003, 2, 28);
+        assertFalse(date.isLeapYear());
+        greeter.overrideTodayWithDate(date);
+        greeter.run();
+        assertTrue(notifications.size() > 1);
     }
 
     private boolean directoryHasMatchForDate(LocalDate date) {
