@@ -38,7 +38,7 @@ class BirthdayGreeting implements Runnable {
             String message = new Greeting(properties.getProperty(GREETING_TEMPLATE.text))
                     .to(ftg.get(properties.getProperty(FIRST_NAME.text)))
                     .build();
-            notificationService.sendGreeting(ftg.get(properties.getProperty(ADDRESS.text)), message);
+            notificationService.send(ftg.get(properties.getProperty(ADDRESS.text)), message);
         });
     }
 }

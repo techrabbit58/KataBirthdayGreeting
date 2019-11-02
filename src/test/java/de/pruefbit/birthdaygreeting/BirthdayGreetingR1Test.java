@@ -185,7 +185,7 @@ class BirthdayGreetingR1Test {
     private static class MockNotificationService implements NotificationService {
 
         @Override
-        public void sendGreeting(String address, String message) {
+        public void send(String address, String message) {
             notifications.put(address, message);
         }
     }
