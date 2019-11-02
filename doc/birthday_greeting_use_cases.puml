@@ -1,0 +1,32 @@
+@startuml
+actor "Caller" as CALLER
+
+rectangle "Birthday Greeting" as GREETER {
+
+    usecase RUN [
+    Run new
+    birthday greeter.
+    ]
+    CALLER ->> RUN
+
+    usecase "Get current date." as TODATE
+    note "Obey leap years." as NOTE1
+    RUN ..> TODATE : include
+    TODATE .. NOTE1
+
+    usecase SELECT [
+    Select from the
+    database, the persons
+    for today.
+    ]
+    RUN ..> SELECT : include
+    note "Obey Feb29 if not leap year." as NOTE2
+    SELECT .. NOTE2
+
+    usecase GREET [
+    Greet persons,
+    if any, for today.
+    ]
+    RUN <.. GREET : extends
+}
+@enduml

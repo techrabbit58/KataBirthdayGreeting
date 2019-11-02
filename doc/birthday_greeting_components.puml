@@ -1,0 +1,30 @@
+@startuml
+actor "Caller" as CALLER
+
+package "Birthday Greeting" {
+    rectangle "Birthday Greeting Application" as CORE
+    CALLER ->> CORE
+    rectangle "POJOs & Helpers" as HELPERS
+    CORE ->> HELPERS
+    rectangle "Friends Directory" as FRIENDS_IFS <<interface>>
+    rectangle "Notification Service" as NOTIFICATOR_IFS <<interface>>
+    CORE -->> FRIENDS_IFS
+    CORE -->> NOTIFICATOR_IFS
+}
+
+package "Data Providers" {
+    rectangle FRIENDS [
+    Actual Data
+    Provider
+    ]
+}
+
+package "Notification Services" {
+    rectangle NOTIFICATOR [
+    Actual Notification
+    Service Adapter
+    ]
+}
+FRIENDS_IFS <|-- FRIENDS
+NOTIFICATOR_IFS <|-- NOTIFICATOR
+@enduml

@@ -1,4 +1,4 @@
-# Design Strategy
+# Release Notes
 
 ## Release
 
@@ -28,79 +28,21 @@ during runtime, and before the core functionality gets run.
 
 **REMARK:** The current release does not support the additional
 features concerning the reminder messages, since that requires
-a lot of assumptions about how to figure out who to remind
+some assumptions about how to figure out who to remind
 about other persons birthday. It may require additional data
-(e.g. a list of subscribers for reminders).
+(e.g. a list of subscribers for reminders. Opting out
+from being reminded, may also be desirable for some
+persons.)
 
 **REMARK:** The Feb, 29th feature will be covered.
 
 ## Core Functionality
 
-```plantuml
-actor "Caller" as CALLER
-
-rectangle "Birthday Greeting" as GREETER {
-
-    usecase RUN [
-    Run new 
-    birthday greeter.
-    ]
-    CALLER ->> RUN
-    
-    usecase "Get current date." as TODATE
-    note "Obey leap years." as NOTE1
-    RUN ..> TODATE : include
-    TODATE .. NOTE1
-    
-    usecase SELECT [
-    Select from the
-    database, the persons
-    for today.
-    ]
-    RUN ..> SELECT : include
-    note "Obey Feb29 if not leap year." as NOTE2
-    SELECT .. NOTE2
-
-    usecase GREET [
-    Greet persons,
-    if any, for today.
-    ]
-    RUN <.. GREET : extends
-}
-```
+![use_case](birthday_greeting_use_cases.png)
 
 ## Application Dependencies
-```plantuml
 
-actor "Caller" as CALLER
-
-package "Birthday Greeting" {
-    rectangle "Birthday Greeting Application" as CORE
-    CALLER ->> CORE
-    rectangle "POJOs & Helpers" as HELPERS
-    CORE ->> HELPERS
-    rectangle "Friends Directory" as FRIENDS_IFS <<interface>>
-    rectangle "Notification Service" as NOTIFICATOR_IFS <<interface>>
-    CORE -->> FRIENDS_IFS
-    CORE -->> NOTIFICATOR_IFS
-}
-
-package "Data Providers" {
-    rectangle FRIENDS [
-    Actual Data
-    Provider
-    ]
-}
-
-package "Notification Services" {
-    rectangle NOTIFICATOR [
-    Actual Notification
-    Service Adapter
-    ]
-}
-FRIENDS_IFS <|-- FRIENDS
-NOTIFICATOR_IFS <|-- NOTIFICATOR
-```
+![components](birthday_greeting_components.png)
 
 ## Implementation
 
@@ -159,4 +101,4 @@ but do no real I/O with the execution environment.
 - Mock classes shall be part of the test environment,
 not of the product.
 
-[(TOP)](#design-strategy)
+[(TOP)](#release-notes)
