@@ -17,7 +17,7 @@ import java.util.*;
 import static de.pruefbit.kata.PropertyNames.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-class BirthdayGreetingTest {
+class BirthdayGreetingR1Test {
     private static NotificationService notificationService;
     private static CSVParser csv;
     private static final Map<String, String> notifications = new HashMap<>();

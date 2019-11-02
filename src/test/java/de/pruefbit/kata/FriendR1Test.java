@@ -8,7 +8,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class FriendTest {
+class FriendR1Test {
     static private final Map<String, String> theMap = new HashMap<>();
     static private Friend friend;
 

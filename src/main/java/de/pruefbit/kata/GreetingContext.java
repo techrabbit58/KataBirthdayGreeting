@@ -28,6 +28,7 @@ class GreetingContext {
         defaultProperties.setProperty(GREETING_TEMPLATE.text, "Subject: Happy birthday!\n\nHappy birthday, dear {0}!");
         defaultProperties.setProperty(ADDRESS.text, "email");
         defaultProperties.setProperty(FIRST_NAME.text, "first_name");
+        defaultProperties.setProperty(LAST_NAME.text, "last_name");
     }
 
     private GreetingContext(

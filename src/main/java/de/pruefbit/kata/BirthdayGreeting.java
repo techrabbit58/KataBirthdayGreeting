@@ -19,7 +19,7 @@ class BirthdayGreeting implements Runnable {
         friendsDirectory = context.getDatabase();
         notificationService = context.getNotificationService();
         properties = context.getProperties();
-        this.today = LocalDate.now();
+        today = LocalDate.now();
     }
 
     void overrideTodayWithDate(@NotNull LocalDate date) {
@@ -34,11 +34,11 @@ class BirthdayGreeting implements Runnable {
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }
-        friendsToGreet.forEach(f -> {
+        friendsToGreet.forEach(ftg -> {
             String message = new Greeting(properties.getProperty(GREETING_TEMPLATE.text))
-                    .to(f.get(properties.getProperty(FIRST_NAME.text)))
+                    .to(ftg.get(properties.getProperty(FIRST_NAME.text)))
                     .build();
-            notificationService.sendGreeting(f.get(properties.getProperty(ADDRESS.text)), message);
+            notificationService.sendGreeting(ftg.get(properties.getProperty(ADDRESS.text)), message);
         });
     }
 }

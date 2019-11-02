@@ -8,7 +8,7 @@ import java.util.List;
 import static de.pruefbit.kata.PropertyNames.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-class GreetingContextTest {
+class GreetingContextR1Test {
 
     @Test
     void context_build_throws_RuntimeException_without_mandatory_settings() {
