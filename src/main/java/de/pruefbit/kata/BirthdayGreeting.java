@@ -5,15 +5,18 @@ import com.sun.istack.internal.NotNull;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Properties;
 
 class BirthdayGreeting implements Runnable {
     private final FriendsDirectory friendsDirectory;
     private final NotificationService notificationService;
+    private final Properties properties;
     private LocalDate today;
 
-    BirthdayGreeting(@NotNull FriendsDirectory friendsDirectory, @NotNull NotificationService notificationService) {
-        this.friendsDirectory = friendsDirectory;
-        this.notificationService = notificationService;
+    BirthdayGreeting(GreetingContext context) {
+        friendsDirectory = context.getDatabase();
+        notificationService = context.getNotificationService();
+        properties = context.getProperties();
         this.today = LocalDate.now();
     }
 
@@ -30,7 +33,7 @@ class BirthdayGreeting implements Runnable {
             throw new RuntimeException(e.getMessage());
         }
         friendsToGreet.forEach(f -> {
-            String message = new Greeting("%s").to(f.get("first_name")).build();
+            String message = new Greeting(properties.getProperty("greeting_template")).to(f.get("first_name")).build();
             notificationService.sendGreeting(f.get("email"), message);
         });
     }

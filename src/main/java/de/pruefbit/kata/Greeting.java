@@ -2,6 +2,8 @@ package de.pruefbit.kata;
 
 import com.sun.istack.internal.NotNull;
 
+import java.text.MessageFormat;
+
 class Greeting {
 
     private final String template;
@@ -17,6 +19,6 @@ class Greeting {
     }
 
     String build() {
-        return String.format(template, name);
+        return MessageFormat.format(template, name);
     }
 }

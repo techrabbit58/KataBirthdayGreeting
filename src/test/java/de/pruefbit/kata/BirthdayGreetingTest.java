@@ -17,7 +17,6 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BirthdayGreetingTest {
-    private static MockFriendsDatabase friends;
     private static NotificationService notificationService;
     private static CSVParser csv;
     private static final Map<String, String> notifications = new HashMap<>();
@@ -32,10 +31,22 @@ class BirthdayGreetingTest {
             "Kowalsky, Nick, 1979/06/03, n.kowalsky@example.com"
     );
 
+    private static final Properties properties = new Properties();
+    static {
+        properties.put("greeting_template", "{0}");
+    }
+
+    private static GreetingContext context;
+
     @BeforeAll
     static void setUpAny() {
-        friends = new MockFriendsDatabase();
+        MockFriendsDatabase friends = new MockFriendsDatabase();
         notificationService = new MockNotificationService();
+        context = new GreetingContext.Builder()
+                .setDatabase(friends)
+                .setNotificationService(notificationService)
+                .setProperties(properties)
+                .build();
     }
 
     @BeforeEach
@@ -45,7 +56,7 @@ class BirthdayGreetingTest {
 
     @Test
     void BirthdayGreeting_for_common_date_with_one_person_to_greet() {
-        BirthdayGreeting greeter = new BirthdayGreeting(friends, notificationService);
+        BirthdayGreeting greeter = new BirthdayGreeting(context);
         LocalDate date = LocalDate.of(1999, 6, 3);
         assertTrue(directoryHasMatchForDate(date));
         greeter.overrideTodayWithDate(date);
@@ -57,7 +68,7 @@ class BirthdayGreetingTest {
 
     @Test
     void BirthdayGreeting_for_common_date_with_more_persons_to_greet() {
-        BirthdayGreeting greeter = new BirthdayGreeting(friends, notificationService);
+        BirthdayGreeting greeter = new BirthdayGreeting(context);
         LocalDate date = LocalDate.of(1999, 9, 11);
         assertTrue(directoryHasMatchForDate(date));
         greeter.overrideTodayWithDate(date);
@@ -69,7 +80,7 @@ class BirthdayGreetingTest {
 
     @Test
     void BirthdayGreeting_for_common_date_without_persons_to_greet() {
-        BirthdayGreeting greeter = new BirthdayGreeting(friends, notificationService);
+        BirthdayGreeting greeter = new BirthdayGreeting(context);
         LocalDate date = LocalDate.of(1999, 6, 4);
         assertFalse(directoryHasMatchForDate(date));
         greeter.overrideTodayWithDate(date);
@@ -79,7 +90,7 @@ class BirthdayGreetingTest {
 
     @Test
     void BirthdayGreeting_for_Feb_29_works_with_leap_years() {
-        BirthdayGreeting greeter = new BirthdayGreeting(friends, notificationService);
+        BirthdayGreeting greeter = new BirthdayGreeting(context);
         LocalDate date = LocalDate.of(2004, 2, 29);
         assertTrue(directoryHasMatchForDate(date));
         assertTrue(date.isLeapYear());
@@ -92,7 +103,7 @@ class BirthdayGreetingTest {
 
     @Test
     void BirthdayGreeting_for_Feb_29_works_outside_leap_years() {
-        BirthdayGreeting greeter = new BirthdayGreeting(friends, notificationService);
+        BirthdayGreeting greeter = new BirthdayGreeting(context);
         LocalDate date = LocalDate.of(2003, 2, 28);
         assertFalse(date.isLeapYear());
         greeter.overrideTodayWithDate(date);
@@ -102,7 +113,12 @@ class BirthdayGreetingTest {
 
     @Test
     void BirthdayGreeting_throws_RuntimeException_on_IO_error() {
-        BirthdayGreeting greeter = new BirthdayGreeting(new MockFaultyDatabase(), notificationService);
+        GreetingContext context = new GreetingContext.Builder()
+                .setDatabase(new MockFaultyDatabase())
+                .setNotificationService(notificationService)
+                .setProperties(properties)
+                .build();
+        BirthdayGreeting greeter = new BirthdayGreeting(context);
         assertThrows(RuntimeException.class, greeter::run);
     }
 
@@ -161,7 +177,7 @@ class BirthdayGreetingTest {
         }
     }
 
-    private class MockFaultyDatabase implements FriendsDirectory {
+    private static class MockFaultyDatabase implements FriendsDirectory {
 
         @Override
         public List<Friend> selectByDate(LocalDate date) throws IOException {
