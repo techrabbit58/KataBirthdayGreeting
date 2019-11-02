@@ -36,7 +36,7 @@ class BirthdayGreeting implements Runnable {
         }
         friendsToGreet.forEach(ftg -> {
             String message = new Greeting(properties.getProperty(GREETING_TEMPLATE.text))
-                    .to(ftg.get(properties.getProperty(FIRST_NAME.text)))
+                    .toName(ftg.get(properties.getProperty(FIRST_NAME.text)))
                     .build();
             notificationService.send(ftg.get(properties.getProperty(ADDRESS.text)), message);
         });

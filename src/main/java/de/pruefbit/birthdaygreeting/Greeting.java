@@ -12,7 +12,7 @@ class Greeting {
         this.template = template;
     }
 
-    Greeting to(@NotNull String name) {
+    Greeting toName(@NotNull String name) {
         this.name = name;
         return this;
     }
