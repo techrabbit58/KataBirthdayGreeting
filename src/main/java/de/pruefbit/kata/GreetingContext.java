@@ -41,7 +41,7 @@ class GreetingContext {
     static class Builder {
         private FriendsDirectory database;
         private NotificationService notificationService;
-        private Properties properties;
+        private final Properties properties = new Properties();
 
         Builder setDatabase(@NotNull FriendsDirectory db) {
             this.database = db;
@@ -53,8 +53,8 @@ class GreetingContext {
             return this;
         }
 
-        Builder setProperties(@NotNull Properties properties) {
-            this.properties = properties;
+        Builder setProperties(@NotNull Properties moreProperties) {
+            properties.putAll(moreProperties);
             return this;
         }
 
