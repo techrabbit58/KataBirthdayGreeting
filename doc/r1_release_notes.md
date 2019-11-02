@@ -118,10 +118,10 @@ follow the Greeting application's interface definitions.
 from the kata description. This shall best be integrated as
 resources for the Birthday Greeting core. The templates
 shall not be coded into the application.
-- The core shall be able to access these templates at
+- The greeting core shall be able to access these templates at
 runtime.
-- (A) message preparation utility class(es) shall be part of
-the core package.
+- Message preparation utility classes shall be part of
+the core package, as needed.
 - The notification service adapters shall only be used for
 message delivery and shall not have any other responsibility.
 
@@ -133,6 +133,10 @@ So it is not necessary to test the e-mail transport chain end
 to end for effectively testing the birthday greeter core.
 The same will most likely be true for any other standard
 message transport.
+- The property file will be mocked in memory, for the tests.
+This is, because reading property fies is nothing else then
+file I/O, regardless if it is a CSV, or "real" database, or
+a properties file.
 - Of course, an integration test will eventually be necessary,
 with any notification service adapter, prior to production.
 But this can be seen as part of a latter product increment.
