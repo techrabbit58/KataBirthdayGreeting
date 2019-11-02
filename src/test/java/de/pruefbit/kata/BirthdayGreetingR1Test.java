@@ -21,6 +21,7 @@ class BirthdayGreetingR1Test {
     private static NotificationService notificationService;
     private static CSVParser csv;
     private static final Map<String, String> notifications = new HashMap<>();
+    private static final String todaySelector = LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd"));
     private static final List<String> FRIENDS_DIRECTORY = Arrays.asList(
             "last_name, first_name, date_of_birth, email",
             "Doe, John, 1982/10/08, john.doe@foobar.com",
@@ -29,7 +30,8 @@ class BirthdayGreetingR1Test {
             "Ford, Francis, 1947/02/28, fran@example.com",
             "Fender, Frank, 1996/02/29, frank.d.fender1@acme.biz",
             "Woodpecker, Cornelia, 1956/09/11, connyw@example.com",
-            "Kowalsky, Nick, 1979/06/03, n.kowalsky@example.com"
+            "Kowalsky, Nick, 1979/06/03, n.kowalsky@example.com",
+            "Woodpecker, Woody, 1955/" + todaySelector + ", woodyw@example.com"
     );
 
     private static final Properties properties = new Properties();
@@ -63,6 +65,16 @@ class BirthdayGreetingR1Test {
         greeter.overrideTodayWithDate(date);
         greeter.run();
         assertEquals(1, notifications.size());
+        notifications.forEach((address, firstName) -> assertTrue(
+                directoryHasMatchForAddressAndFirstName(address, firstName)));
+    }
+
+    @Test
+    void BirthdayGreeting_works_for_current_date() {
+        BirthdayGreeting greeter = new BirthdayGreeting(context);
+        assertTrue(directoryHasMatchForDate(LocalDate.now()));
+        greeter.run();
+        assertTrue(notifications.size() >= 1);
         notifications.forEach((address, firstName) -> assertTrue(
                 directoryHasMatchForAddressAndFirstName(address, firstName)));
     }

@@ -53,9 +53,9 @@ rectangle "Birthday Greeting" as GREETER {
     TODATE .. NOTE1
     
     usecase SELECT [
-    Select todays
-    persons to greet
-    from the database.
+    Select from the
+    database, the persons
+    for today.
     ]
     RUN ..> SELECT : include
     note "Obey Feb29 if not leap year." as NOTE2
@@ -77,9 +77,9 @@ actor "Caller" as CALLER
 package "Birthday Greeting" {
     rectangle "Birthday Greeting Application" as CORE
     CALLER ->> CORE
-    rectangle " POJOs & Helpers" as HELPERS
+    rectangle "POJOs & Helpers" as HELPERS
     CORE ->> HELPERS
-    rectangle "Friends List" as FRIENDS_IFS <<interface>>
+    rectangle "Friends Directory" as FRIENDS_IFS <<interface>>
     rectangle "Notification Service" as NOTIFICATOR_IFS <<interface>>
     CORE -->> FRIENDS_IFS
     CORE -->> NOTIFICATOR_IFS
