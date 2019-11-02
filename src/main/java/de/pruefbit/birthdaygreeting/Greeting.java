@@ -6,7 +6,7 @@ import java.text.MessageFormat;
 
 class Greeting {
     private final String template;
-    private String name;
+    private String name = null;
 
     Greeting(String template) {
         this.template = template;
@@ -18,6 +18,9 @@ class Greeting {
     }
 
     String build() {
+        if (name == null || name.equals("")) {
+            throw new RuntimeException("the name of the notified person may not be null nor empty");
+        }
         return MessageFormat.format(template, name);
     }
 }
