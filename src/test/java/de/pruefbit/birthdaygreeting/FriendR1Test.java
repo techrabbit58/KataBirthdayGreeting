@@ -1,4 +1,4 @@
-package de.pruefbit.kata;
+package de.pruefbit.birthdaygreeting;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

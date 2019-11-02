@@ -1,4 +1,4 @@
-package de.pruefbit.kata;
+package de.pruefbit.birthdaygreeting;
 
 import com.sun.istack.internal.NotNull;
 
@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Properties;
 
-import static de.pruefbit.kata.PropertyNames.*;
+import static de.pruefbit.birthdaygreeting.PropertyNames.*;
 
 class BirthdayGreeting implements Runnable {
     private final FriendsDirectory friendsDirectory;

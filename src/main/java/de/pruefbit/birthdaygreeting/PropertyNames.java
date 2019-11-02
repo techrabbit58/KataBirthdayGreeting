@@ -1,4 +1,4 @@
-package de.pruefbit.kata;
+package de.pruefbit.birthdaygreeting;
 
 public enum PropertyNames {
     GREETING_TEMPLATE("greetingTemplate"),

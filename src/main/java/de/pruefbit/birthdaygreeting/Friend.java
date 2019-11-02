@@ -1,10 +1,9 @@
-package de.pruefbit.kata;
+package de.pruefbit.birthdaygreeting;
 
 import java.util.HashMap;
 import java.util.Map;
 
 class Friend {
-
     private final Map<String, String> attributes = new HashMap<>();
 
     private Friend() {}

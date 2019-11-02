@@ -1,4 +1,4 @@
-package de.pruefbit.kata;
+package de.pruefbit.birthdaygreeting;
 
 import com.sun.istack.internal.NotNull;
 

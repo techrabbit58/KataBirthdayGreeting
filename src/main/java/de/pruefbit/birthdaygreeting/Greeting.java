@@ -1,11 +1,10 @@
-package de.pruefbit.kata;
+package de.pruefbit.birthdaygreeting;
 
 import com.sun.istack.internal.NotNull;
 
 import java.text.MessageFormat;
 
 class Greeting {
-
     private final String template;
     private String name;
 

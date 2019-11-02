@@ -1,11 +1,11 @@
-package de.pruefbit.kata;
+package de.pruefbit.birthdaygreeting;
 
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.List;
 
-import static de.pruefbit.kata.PropertyNames.*;
+import static de.pruefbit.birthdaygreeting.PropertyNames.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GreetingContextR1Test {

@@ -1,4 +1,4 @@
-package de.pruefbit.kata;
+package de.pruefbit.birthdaygreeting;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -14,7 +14,7 @@ import java.time.MonthDay;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-import static de.pruefbit.kata.PropertyNames.*;
+import static de.pruefbit.birthdaygreeting.PropertyNames.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BirthdayGreetingR1Test {

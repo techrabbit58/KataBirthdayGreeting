@@ -1,12 +1,22 @@
-package de.pruefbit.kata;
+package de.pruefbit.birthdaygreeting;
 
 import com.sun.istack.internal.NotNull;
 
 import java.util.Properties;
 
-import static de.pruefbit.kata.PropertyNames.*;
+import static de.pruefbit.birthdaygreeting.PropertyNames.*;
 
 class GreetingContext {
+    private final FriendsDirectory database;
+    private final NotificationService notificationService;
+    private final Properties properties = new Properties();
+    static private final Properties defaultProperties = new Properties();
+    static {
+        defaultProperties.setProperty(GREETING_TEMPLATE.text, "Subject: Happy birthday!\n\nHappy birthday, dear {0}!");
+        defaultProperties.setProperty(ADDRESS.text, "email");
+        defaultProperties.setProperty(FIRST_NAME.text, "first_name");
+        defaultProperties.setProperty(LAST_NAME.text, "last_name");
+    }
 
     FriendsDirectory getDatabase() {
         return database;
@@ -18,17 +28,6 @@ class GreetingContext {
 
     Properties getProperties() {
         return properties;
-    }
-
-    private final FriendsDirectory database;
-    private final NotificationService notificationService;
-    private final Properties properties = new Properties();
-    static private final Properties defaultProperties = new Properties();
-    static {
-        defaultProperties.setProperty(GREETING_TEMPLATE.text, "Subject: Happy birthday!\n\nHappy birthday, dear {0}!");
-        defaultProperties.setProperty(ADDRESS.text, "email");
-        defaultProperties.setProperty(FIRST_NAME.text, "first_name");
-        defaultProperties.setProperty(LAST_NAME.text, "last_name");
     }
 
     private GreetingContext(
