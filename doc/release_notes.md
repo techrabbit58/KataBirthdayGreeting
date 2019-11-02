@@ -1,5 +1,11 @@
 # Design Strategy
 
+## Release
+
+Release | Release Date | Remark
+ :---: | :---: | :---
+1.0 | 2019/11/02 | basic features, plus Feb29 feature
+
 ## Introduction
 
 This kata is about keeping an application architecture open
