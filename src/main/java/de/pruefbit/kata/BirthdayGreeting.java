@@ -27,8 +27,7 @@ class BirthdayGreeting implements Runnable {
         try {
             friendsToGreet = friendsDirectory.selectByDate(today);
         } catch (IOException e) {
-            e.printStackTrace();
-            return;
+            throw new RuntimeException(e.getMessage());
         }
         friendsToGreet.forEach(f -> {
             String message = new Greeting("%s").to(f.get("first_name")).build();

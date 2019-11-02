@@ -17,6 +17,9 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BirthdayGreetingTest {
+    private static MockFriendsDatabase friends;
+    private static NotificationService notificationService;
+    private static CSVParser csv;
     private static final Map<String, String> notifications = new HashMap<>();
     private static final List<String> FRIENDS_DIRECTORY = Arrays.asList(
             "last_name, first_name, date_of_birth, email",
@@ -28,9 +31,6 @@ class BirthdayGreetingTest {
             "Woodpecker, Cornelia, 1956/09/11, connyw@example.com",
             "Kowalsky, Nick, 1979/06/03, n.kowalsky@example.com"
     );
-    private static MockFriendsDatabase friends;
-    private static NotificationService notificationService;
-    private static CSVParser csv;
 
     @BeforeAll
     static void setUpAny() {
@@ -100,6 +100,12 @@ class BirthdayGreetingTest {
         assertTrue(notifications.size() > 1);
     }
 
+    @Test
+    void BirthdayGreeting_throws_RuntimeException_on_IO_error() {
+        BirthdayGreeting greeter = new BirthdayGreeting(new MockFaultyDatabase(), notificationService);
+        assertThrows(RuntimeException.class, greeter::run);
+    }
+
     private boolean directoryHasMatchForDate(LocalDate date) {
         return FRIENDS_DIRECTORY.stream().anyMatch(s -> s.contains(date.format(DateTimeFormatter.ofPattern("MM/dd,"))));
     }
@@ -109,9 +115,6 @@ class BirthdayGreetingTest {
     }
 
     private static class MockFriendsDatabase implements FriendsDirectory {
-
-        MockFriendsDatabase() {
-        }
 
         @Override
         public List<Friend> selectByDate(LocalDate date) throws IOException {
@@ -155,6 +158,14 @@ class BirthdayGreetingTest {
         @Override
         public void sendGreeting(String address, String message) {
             notifications.put(address, message);
+        }
+    }
+
+    private class MockFaultyDatabase implements FriendsDirectory {
+
+        @Override
+        public List<Friend> selectByDate(LocalDate date) throws IOException {
+            throw new IOException("faulty database");
         }
     }
 }
