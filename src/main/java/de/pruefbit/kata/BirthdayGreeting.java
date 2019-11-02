@@ -2,6 +2,7 @@ package de.pruefbit.kata;
 
 import com.sun.istack.internal.NotNull;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -22,10 +23,16 @@ class BirthdayGreeting implements Runnable {
 
     @Override
     public void run() {
-        List<Friend> friendsToGreet = friendsDirectory.selectByDate(today);
+        List<Friend> friendsToGreet;
+        try {
+            friendsToGreet = friendsDirectory.selectByDate(today);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
         friendsToGreet.forEach(f -> {
-            String message = new Greeting().to(f.getFirstName()).build();
-            notificationService.sendGreeting(f.getEmail(), message);
+            String message = new Greeting("%s").to(f.get("first_name")).build();
+            notificationService.sendGreeting(f.get("email"), message);
         });
     }
 }

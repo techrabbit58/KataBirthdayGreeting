@@ -7,8 +7,8 @@ class Greeting {
     private final String template;
     private String name;
 
-    Greeting() {
-        template = "%s";
+    Greeting(String template) {
+        this.template = template;
     }
 
     Greeting to(@NotNull String name) {

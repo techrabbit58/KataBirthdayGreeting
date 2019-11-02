@@ -1,7 +1,7 @@
 package de.pruefbit.kata;
 
 import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.csv.CSVParser;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,11 +17,7 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BirthdayGreetingTest {
-    private static MockFriendsDatabase friends;
-    private static NotificationService notificationService;
     private static final Map<String, String> notifications = new HashMap<>();
-    private static List<CSVRecord> csv;
-
     private static final List<String> FRIENDS_DIRECTORY = Arrays.asList(
             "last_name, first_name, date_of_birth, email",
             "Doe, John, 1982/10/08, john.doe@foobar.com",
@@ -32,6 +28,9 @@ class BirthdayGreetingTest {
             "Woodpecker, Cornelia, 1956/09/11, connyw@example.com",
             "Kowalsky, Nick, 1979/06/03, n.kowalsky@example.com"
     );
+    private static MockFriendsDatabase friends;
+    private static NotificationService notificationService;
+    private static CSVParser csv;
 
     @BeforeAll
     static void setUpAny() {
@@ -112,31 +111,23 @@ class BirthdayGreetingTest {
     private static class MockFriendsDatabase implements FriendsDirectory {
 
         MockFriendsDatabase() {
-            csv = parseTextAsCsv(String.join("\n", FRIENDS_DIRECTORY));
-        }
-
-        private List<CSVRecord> parseTextAsCsv(String rawInput) {
-            try {
-                return CSVFormat.RFC4180
-                        .withSkipHeaderRecord()
-                        .withHeader("last_name", "first_name", "date_of_birth", "email")
-                        .withIgnoreSurroundingSpaces()
-                        .parse(new StringReader(rawInput))
-                        .getRecords();
-            } catch (IOException e) {
-                e.printStackTrace();
-                System.exit(-1);
-            }
-            return null;
         }
 
         @Override
-        public List<Friend> selectByDate(LocalDate date) {
-            List<String> daySelection = collectSelectionCriteria(date);
+        public List<Friend> selectByDate(LocalDate date) throws IOException {
+            csv = parseTextAsCsv(String.join("\n", FRIENDS_DIRECTORY));
+            List<String> daySelection = prepareSelectionCriteria(date);
             return collectGreetingCandidates(daySelection);
         }
 
-        private List<String> collectSelectionCriteria(LocalDate date) {
+        private CSVParser parseTextAsCsv(String rawInput) throws IOException {
+            return CSVFormat.RFC4180
+                    .withFirstRecordAsHeader()
+                    .withIgnoreSurroundingSpaces()
+                    .parse(new StringReader(rawInput));
+        }
+
+        private List<String> prepareSelectionCriteria(LocalDate date) {
             List<String> daySelection = new ArrayList<>();
             daySelection.add(date.format(DateTimeFormatter.ofPattern("MM/dd")));
             if (!date.isLeapYear() && date.equals(LocalDate.of(date.getYear(), Month.FEBRUARY, 28))) {
@@ -146,9 +137,9 @@ class BirthdayGreetingTest {
             return daySelection;
         }
 
-        private List<Friend> collectGreetingCandidates(List<String> daySelection) {
+        private List<Friend> collectGreetingCandidates(List<String> daySelection) throws IOException {
             List<Friend> friendsToGreet = new ArrayList<>();
-            csv.forEach(r -> {
+            csv.getRecords().forEach(r -> {
                 for (String day : daySelection) {
                     if (r.get("date_of_birth").endsWith(day)) {
                         friendsToGreet.add(Friend.fromMap(r.toMap()));
