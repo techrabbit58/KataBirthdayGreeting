@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Properties;
 
+import static de.pruefbit.kata.PropertyNames.*;
+
 class BirthdayGreeting implements Runnable {
     private final FriendsDirectory friendsDirectory;
     private final NotificationService notificationService;
@@ -33,8 +35,10 @@ class BirthdayGreeting implements Runnable {
             throw new RuntimeException(e.getMessage());
         }
         friendsToGreet.forEach(f -> {
-            String message = new Greeting(properties.getProperty("greeting_template")).to(f.get("first_name")).build();
-            notificationService.sendGreeting(f.get("email"), message);
+            String message = new Greeting(properties.getProperty(GREETING_TEMPLATE.text))
+                    .to(f.get(properties.getProperty(FIRST_NAME.text)))
+                    .build();
+            notificationService.sendGreeting(f.get(properties.getProperty(ADDRESS.text)), message);
         });
     }
 }

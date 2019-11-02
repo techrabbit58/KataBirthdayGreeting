@@ -4,6 +4,8 @@ import com.sun.istack.internal.NotNull;
 
 import java.util.Properties;
 
+import static de.pruefbit.kata.PropertyNames.*;
+
 class GreetingContext {
 
     FriendsDirectory getDatabase() {
@@ -23,9 +25,9 @@ class GreetingContext {
     private final Properties properties = new Properties();
     static private final Properties defaultProperties = new Properties();
     static {
-        defaultProperties.setProperty("greeting_template", "Subject: Happy birthday!\n\nHappy birthday, dear {0}!");
-        defaultProperties.setProperty("address", "email");
-        defaultProperties.setProperty("firstName", "first_name");
+        defaultProperties.setProperty(GREETING_TEMPLATE.text, "Subject: Happy birthday!\n\nHappy birthday, dear {0}!");
+        defaultProperties.setProperty(ADDRESS.text, "email");
+        defaultProperties.setProperty(FIRST_NAME.text, "first_name");
     }
 
     private GreetingContext(

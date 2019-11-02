@@ -2,10 +2,10 @@ package de.pruefbit.kata;
 
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
+import static de.pruefbit.kata.PropertyNames.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GreetingContextTest {
@@ -22,7 +22,7 @@ class GreetingContextTest {
                 .setNotificationService(new MockNotificationService())
                 .build();
         String expected = "Subject: Happy birthday!\n\nHappy birthday, dear {0}!";
-        String actual = context.getProperties().getProperty("greeting_template");
+        String actual = context.getProperties().getProperty(GREETING_TEMPLATE.text);
         assertEquals(expected, actual);
     }
 

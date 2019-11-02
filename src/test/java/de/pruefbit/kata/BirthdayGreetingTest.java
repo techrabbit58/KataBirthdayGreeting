@@ -14,6 +14,7 @@ import java.time.MonthDay;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import static de.pruefbit.kata.PropertyNames.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BirthdayGreetingTest {
@@ -33,7 +34,7 @@ class BirthdayGreetingTest {
 
     private static final Properties properties = new Properties();
     static {
-        properties.put("greeting_template", "{0}");
+        properties.put(GREETING_TEMPLATE.text, "{0}");
     }
 
     private static GreetingContext context;
