@@ -53,8 +53,16 @@ class BirthdayGreetingR1Test {
     }
 
     @BeforeEach
-    void setUpEach() {
+    void setUpEach() throws IOException {
+        csv = parseTextAsCsv(String.join("\n", FRIENDS_DIRECTORY));
         notifications.clear();
+    }
+
+    private CSVParser parseTextAsCsv(String rawInput) throws IOException {
+        return CSVFormat.RFC4180
+                .withFirstRecordAsHeader()
+                .withIgnoreSurroundingSpaces()
+                .parse(new StringReader(rawInput));
     }
 
     @Test
@@ -147,16 +155,8 @@ class BirthdayGreetingR1Test {
 
         @Override
         public List<Friend> selectByDate(LocalDate date) throws IOException {
-            csv = parseTextAsCsv(String.join("\n", FRIENDS_DIRECTORY));
             List<String> daySelection = prepareSelectionCriteria(date);
             return collectGreetingCandidates(daySelection);
-        }
-
-        private CSVParser parseTextAsCsv(String rawInput) throws IOException {
-            return CSVFormat.RFC4180
-                    .withFirstRecordAsHeader()
-                    .withIgnoreSurroundingSpaces()
-                    .parse(new StringReader(rawInput));
         }
 
         private List<String> prepareSelectionCriteria(LocalDate date) {
