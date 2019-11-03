@@ -4,7 +4,7 @@
 
 Release | Release Date | Remark
  :---: | :---: | :---
-1.0 | 2019/11/02 | basic features, plus Feb29 feature
+1.0.2 | 2019/11/03 | basic features, plus Feb29 feature
 
 ## Introduction
 
