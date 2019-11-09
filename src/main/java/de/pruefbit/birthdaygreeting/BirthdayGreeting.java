@@ -1,10 +1,9 @@
 package de.pruefbit.birthdaygreeting;
 
-import com.sun.istack.internal.NotNull;
-
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
 
 import static de.pruefbit.birthdaygreeting.PropertyNames.*;
@@ -22,8 +21,8 @@ class BirthdayGreeting implements Runnable {
         today = LocalDate.now();
     }
 
-    void overrideTodayWithDate(@NotNull LocalDate date) {
-        this.today = date;
+    void overrideTodayWithDate(LocalDate date) {
+        this.today = Objects.requireNonNull(date);
     }
 
     @Override

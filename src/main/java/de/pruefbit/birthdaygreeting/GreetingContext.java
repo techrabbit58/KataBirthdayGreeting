@@ -1,7 +1,5 @@
 package de.pruefbit.birthdaygreeting;
 
-import com.sun.istack.internal.NotNull;
-
 import java.util.Properties;
 
 import static de.pruefbit.birthdaygreeting.PropertyNames.*;
@@ -45,17 +43,17 @@ class GreetingContext {
         private NotificationService notificationService;
         private final Properties properties = new Properties();
 
-        Builder setDatabase(@NotNull FriendsDirectory db) {
+        Builder setDatabase(FriendsDirectory db) {
             this.database = db;
             return this;
         }
 
-        Builder setNotificationService(@NotNull NotificationService notificationService) {
+        Builder setNotificationService(NotificationService notificationService) {
             this.notificationService = notificationService;
             return this;
         }
 
-        Builder setProperties(@NotNull Properties moreProperties) {
+        Builder setProperties(Properties moreProperties) {
             properties.putAll(moreProperties);
             return this;
         }

@@ -1,7 +1,5 @@
 package de.pruefbit.birthdaygreeting;
 
-import com.sun.istack.internal.NotNull;
-
 import java.text.MessageFormat;
 
 class Greeting {
@@ -12,7 +10,7 @@ class Greeting {
         this.template = template;
     }
 
-    Greeting toName(@NotNull String name) {
+    Greeting toName(String name) {
         this.name = name;
         return this;
     }
